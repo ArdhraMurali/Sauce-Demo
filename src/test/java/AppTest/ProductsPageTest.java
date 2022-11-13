@@ -1,5 +1,11 @@
 package AppTest;
 
+
+
+import java.util.List;
+import java.util.Random;
+
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -7,6 +13,7 @@ import org.testng.annotations.Test;
 import Base.PageBasics;
 import Pages.LoginPage;
 import Pages.ProductsPage;
+
 
 public class ProductsPageTest extends PageBasics {
 	
@@ -24,15 +31,20 @@ public class ProductsPageTest extends PageBasics {
 	@Test
 	public void test_random_product_selection() {
 		
+		List<WebElement> products = product_page.get_products_list();
+		
+		
+		for(int i=0;i<3;i++) {
+			
+			Random ran = new Random();
+			int random_product_index = ran.nextInt(products.size());
+			product_page.add_product_to_cart_based_on_index(random_product_index);
+			Assert.assertEquals(product_page.is_product_carted(random_product_index), true);
 
-		product_page.add_product_to_cart_based_on_index(0);
-		Assert.assertEquals(product_page.is_product_carted(0), true);
+		}
 		
-		product_page.add_product_to_cart_based_on_index(2);
-		Assert.assertEquals(product_page.is_product_carted(2), true);
 		
-		product_page.add_product_to_cart_based_on_index(5);		
-		Assert.assertEquals(product_page.is_product_carted(5), true);
+		
 		
 	}
 	
